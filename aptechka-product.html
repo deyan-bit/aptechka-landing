@@ -335,9 +335,18 @@
       footer { padding: 32px 20px; }
       .footer-inner { flex-direction: column; align-items: flex-start; }
       .footer-right { text-align: left; }
-      .reviews-wrap { overflow: hidden; }
-      .reviews-grid { display: flex; flex-wrap: nowrap; gap: 0; transition: transform 0.35s cubic-bezier(0.25,0.46,0.45,0.94); will-change: transform; }
-      .review-card { min-width: 100%; flex-shrink: 0; margin: 0; }
+      .reviews-grid {
+        display: flex !important;
+        overflow-x: scroll;
+        scroll-snap-type: x mandatory;
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        gap: 0;
+        transition: none;
+      }
+      .reviews-grid::-webkit-scrollbar { display: none; }
+      .review-card { flex: 0 0 100%; scroll-snap-align: start; margin: 0; }
       .reviews-dots { display: flex !important; }
     }
 
@@ -885,7 +894,6 @@
   (function() {
     var grid = document.getElementById('reviews-grid');
     var dotsEl = document.getElementById('reviews-dots');
-    var wrap = grid && grid.parentElement;
     if (!grid || !dotsEl) return;
     var cards = grid.querySelectorAll('.review-card');
     var total = cards.length;
@@ -899,22 +907,22 @@
       dotsEl.appendChild(d);
     });
 
-    function goTo(n) {
-      cur = ((n % total) + total) % total;
-      grid.style.transform = 'translateX(-' + (cur * 100) + '%)';
+    function updateDots() {
       dotsEl.querySelectorAll('.reviews-dot').forEach(function(d, i) {
         d.classList.toggle('active', i === cur);
       });
     }
 
-    var x0 = null;
-    wrap.addEventListener('touchstart', function(e) { x0 = e.touches[0].clientX; }, { passive: true });
-    wrap.addEventListener('touchend', function(e) {
-      if (x0 === null) return;
-      var dx = e.changedTouches[0].clientX - x0;
-      if (Math.abs(dx) > 40) goTo(cur + (dx < 0 ? 1 : -1));
-      x0 = null;
-    });
+    function goTo(n) {
+      cur = ((n % total) + total) % total;
+      grid.scrollTo({ left: cur * grid.offsetWidth, behavior: 'smooth' });
+      updateDots();
+    }
+
+    grid.addEventListener('scroll', function() {
+      var n = Math.round(grid.scrollLeft / Math.max(grid.offsetWidth, 1));
+      if (n !== cur && n >= 0 && n < total) { cur = n; updateDots(); }
+    }, { passive: true });
   })();
 </script>
 </body>
