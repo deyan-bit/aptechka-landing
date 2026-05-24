@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Aptechka → GitHub Upload</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 600px; margin: 60px auto; padding: 0 20px; background: #f8f8f8; color: #111; }
+    h2 { margin-bottom: 6px; }
+    p { color: #666; font-size: 14px; margin-bottom: 24px; }
+    .row { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+    label { min-width: 100px; font-size: 14px; }
+    input[type=file] { flex: 1; }
+    button { margin-top: 12px; padding: 12px 28px; background: #C8001E; color: #fff; border: none; border-radius: 8px; font-size: 15px; cursor: pointer; }
+    button:disabled { opacity: 0.5; cursor: default; }
+    pre { background: #111; color: #0f0; padding: 16px; border-radius: 8px; font-size: 13px; margin-top: 20px; white-space: pre-wrap; min-height: 60px; }
+  </style>
+</head>
+<body>
+  <h2>Aptechka → GitHub Uploader</h2>
+  <p>Select the two files from the <code>landing/</code> folder, then click Upload.</p>
+
+  <div class="row">
+    <label>index.html</label>
+    <input type="file" id="htmlFile" accept=".html">
+  </div>
+  <div class="row">
+    <label>kit.jpg</label>
+    <input type="file" id="imgFile" accept=".jpg,.jpeg">
+  </div>
+  <button id="btn" onclick="upload()">Upload to GitHub</button>
+  <pre id="log">Waiting…</pre>
+
+<script>
+/* TOKEN and repo injected at runtime via window._token / window._user / window._repo */
+const USER = window._user || 'deyan-bit';
+const REPO = window._repo || 'aptechka-landing';
+
+function getToken() { return window._token || ''; }
+
+function log(msg) {
+  const el = document.getElementById('log');
+  el.textContent += '\n' + msg;
+  el.scrollTop = el.scrollHeight;
+}
+
+function readAsBase64(file) {
+  return new Promise((resolve, reject) => {
+    const r = new FileReader();
+    r.onload = () => resolve(r.result.split(',')[1]);
+    r.onerror = reject;
+    r.readAsDataURL(file);
+  });
+}
+
+async function pushFile(b64, path) {
+  const url = `https://api.github.com/repos/${USER}/${REPO}/contents/${path}`;
+  const resp = await fetch(url, {
+    method: 'PUT',
+    headers: {
+      'Authorization': `token ${getToken()}`,
+      'Accept': 'application/vnd.github.v3+json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ message: `Add ${path}`, content: b64 })
+  });
+  const data = await resp.json();
+  if (resp.ok) { log(`✓  ${path}  →  ${data.content.html_url}`); }
+  else          { log(`✗  ${path}  →  ${resp.status}: ${JSON.stringify(data)}`); }
+}
+
+async function upload() {
+  if (!getToken()) { log('No token — window._token not set.'); return; }
+  const htmlFile = document.getElementById('htmlFile').files[0];
+  const imgFile  = document.getElementById('imgFile').files[0];
+  if (!htmlFile || !imgFile) { log('Select both files first.'); return; }
+
+  document.getElementById('btn').disabled = true;
+  document.getElementById('log').textContent = 'Reading files…';
+
+  const htmlB64 = await readAsBase64(htmlFile);
+  const imgB64  = await readAsBase64(imgFile);
+
+  log(`index.html  ${htmlB64.length} b64 chars`);
+  log(`kit.jpg     ${imgB64.length} b64 chars`);
+  log('Uploading index.html…');
+  await pushFile(htmlB64, 'index.html');
+  log('Uploading kit.jpg…');
+  await pushFile(imgB64, 'kit.jpg');
+  log('\nAll done. Connect repo to Vercel at https://vercel.com/new');
+  document.getElementById('btn').disabled = false;
+}
+</script>
+</body>
+</html>
