@@ -435,11 +435,12 @@
       -webkit-appearance: none;
       font-family: inherit;
     }
-    .qty-btn:hover { border-color: var(--red); }
+    .qty-btn:hover { border-color: var(--black); }
     .qty-btn.active {
-      border-color: var(--red);
-      background: var(--red-lt);
-      box-shadow: 0 0 0 1px var(--red);
+      border-color: var(--black);
+      background: var(--black);
+      color: var(--white);
+      font-weight: 500;
     }
     .qty-btn .qty-num {
       display: block;
@@ -449,7 +450,7 @@
       color: var(--black);
       line-height: 1;
     }
-    .qty-btn.active .qty-num { color: var(--red); }
+    .qty-btn.active .qty-num { color: var(--white); }
     .qty-btn .qty-label {
       display: block;
       font-size: 9.5px;
@@ -1031,11 +1032,12 @@
       padding: 10px 8px; text-align: center; cursor: pointer;
       background: var(--white); font-family: inherit; transition: all 0.12s;
     }
-    .period-btn:hover { border-color: var(--red); }
-    .period-btn.active { border-color: var(--red); background: var(--red-lt); box-shadow: 0 0 0 1px var(--red); }
+    .period-btn:hover { border-color: var(--black); }
+    .period-btn.active { border-color: var(--black); background: var(--black); color: var(--white); font-weight: 500; }
     .period-btn .pb-date { display: block; font-size: 13px; font-weight: 600; color: var(--black); }
-    .period-btn.active .pb-date { color: var(--red); }
+    .period-btn.active .pb-date { color: var(--white); }
     .period-btn .pb-note { display: block; font-size: 11px; color: var(--grey); margin-top: 2px; }
+    .period-btn.active .pb-note { color: rgba(255,255,255,0.6); }
 
     /* ── REVIEWS ── */
     .reviews-source {
