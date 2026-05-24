@@ -1483,6 +1483,19 @@
     document.getElementById('qty-in-btn').textContent = labels[n] || '4+ бройки';
   }
 
+  /* ── WEBHOOK — paste your Apps Script deployment URL below ── */
+  const WEBHOOK_URL = 'PASTE_YOUR_APPS_SCRIPT_URL_HERE';
+
+  function sendToSheets(email, qty, source) {
+    if (!WEBHOOK_URL || WEBHOOK_URL.startsWith('PASTE')) return;
+    fetch(WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email, qty: qty, source: source }),
+      mode: 'no-cors'
+    }).catch(function() {});
+  }
+
   /* ── HERO FORM SUBMIT ── */
   function handleHeroSubmit() {
     const email = document.getElementById('hero-email').value.trim();
@@ -1491,7 +1504,7 @@
       document.getElementById('hero-email').style.borderColor = 'var(--red)';
       return;
     }
-    // Here you'd POST to your email service (Formspree, Brevo, etc.)
+    sendToSheets(email, selectedQty, 'hero');
     document.getElementById('form-body').style.display = 'none';
     document.getElementById('success-state').style.display = 'block';
     document.getElementById('trust-strip').style.display = 'none';
@@ -1501,8 +1514,9 @@
   /* ── BOTTOM FORM SUBMIT ── */
   function handleBottomSubmit(e) {
     e.preventDefault();
-    const qty = document.getElementById('bottom-qty').value;
-    // qty available for POST to email service alongside email
+    const email = document.getElementById('bottom-email').value.trim();
+    const qty   = document.getElementById('bottom-qty').value;
+    sendToSheets(email, qty, 'footer');
     document.querySelector('.bottom-form-wrap').style.display = 'none';
     document.getElementById('bottom-success').style.display = 'block';
     incrementCounter();
