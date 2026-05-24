@@ -1020,7 +1020,10 @@
       footer { padding: 32px 20px; }
       .footer-inner { flex-direction: column; align-items: flex-start; }
       .footer-right { text-align: left; }
-      .reviews-grid { grid-template-columns: 1fr; }
+      .reviews-wrap { overflow: hidden; }
+      .reviews-grid { display: flex; flex-wrap: nowrap; gap: 0; transition: transform 0.35s cubic-bezier(0.25,0.46,0.45,0.94); will-change: transform; }
+      .review-card { min-width: 100%; flex-shrink: 0; margin: 0; }
+      .reviews-dots { display: flex !important; }
     }
 
     /* ── PERIOD SELECTOR ── */
@@ -1040,6 +1043,22 @@
     .period-btn.active .pb-note { color: rgba(255,255,255,0.6); }
 
     /* ── REVIEWS ── */
+    .reviews-dots {
+      display: none;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 20px;
+    }
+    .reviews-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--border);
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .reviews-dot.active { background: var(--black); }
     .reviews-source {
       font-size: 13px;
       color: var(--muted);
@@ -1378,7 +1397,7 @@
   <div class="section-inner">
     <div class="section-eyebrow">Защо директен внос</div>
     <div class="section-title">Защо да плащаш повече?<br>За остарял продукт.</div>
-    <p class="section-sub">Аптеките са посредници - купуват на едро от търговци като нас и препродават с висока надценка. Сайтовете за автомобилни стоки правят същото. Само при нас ще получите аптечка произведена максимално близо до момента на покупката.</p>
+    <p class="section-sub">Само при нас ще получите аптечка произведена максимално близо до момента на покупката.</p>
     <div class="compare-grid">
       <div class="compare-card bad">
         <div class="compare-card-label">Аптека / веригата</div>
@@ -1419,7 +1438,8 @@
     <div class="section-eyebrow">Мнения на клиенти</div>
     <div class="section-title">Какво казват за нашата аптечка</div>
     <p class="reviews-source">★★★★★ 4.96 / 5 · от сайта на производителя</p>
-    <div class="reviews-grid">
+    <div class="reviews-wrap">
+    <div class="reviews-grid" id="reviews-grid">
 
       <div class="review-card">
         <div class="review-stars">★★★★★</div>
@@ -1464,6 +1484,8 @@
       </div>
 
     </div>
+    </div><!-- /reviews-wrap -->
+    <div class="reviews-dots" id="reviews-dots"></div>
   </div>
 </div>
 
@@ -1662,6 +1684,42 @@
       document.getElementById('counter-badge').textContent = baseCount + ' запазени';
     }
   }, 8000);
+
+  /* ── REVIEWS CAROUSEL (mobile) ── */
+  (function() {
+    var grid = document.getElementById('reviews-grid');
+    var dotsEl = document.getElementById('reviews-dots');
+    var wrap = grid && grid.parentElement;
+    if (!grid || !dotsEl) return;
+    var cards = grid.querySelectorAll('.review-card');
+    var total = cards.length;
+    var cur = 0;
+
+    cards.forEach(function(_, i) {
+      var d = document.createElement('button');
+      d.className = 'reviews-dot' + (i === 0 ? ' active' : '');
+      d.setAttribute('aria-label', 'Мнение ' + (i + 1));
+      d.addEventListener('click', function() { goTo(i); });
+      dotsEl.appendChild(d);
+    });
+
+    function goTo(n) {
+      cur = ((n % total) + total) % total;
+      grid.style.transform = 'translateX(-' + (cur * 100) + '%)';
+      dotsEl.querySelectorAll('.reviews-dot').forEach(function(d, i) {
+        d.classList.toggle('active', i === cur);
+      });
+    }
+
+    var x0 = null;
+    wrap.addEventListener('touchstart', function(e) { x0 = e.touches[0].clientX; }, { passive: true });
+    wrap.addEventListener('touchend', function(e) {
+      if (x0 === null) return;
+      var dx = e.changedTouches[0].clientX - x0;
+      if (Math.abs(dx) > 40) goTo(cur + (dx < 0 ? 1 : -1));
+      x0 = null;
+    });
+  })();
 
   /* ── FAQ TOGGLE ── */
   function toggleFaq(btn) {
