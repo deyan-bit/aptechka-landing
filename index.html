@@ -1022,6 +1022,21 @@
       .reviews-grid { grid-template-columns: 1fr; }
     }
 
+    /* ── PERIOD SELECTOR ── */
+    .period-toggle {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px;
+    }
+    .period-btn {
+      border: 0.5px solid var(--border); border-radius: var(--radius);
+      padding: 10px 8px; text-align: center; cursor: pointer;
+      background: var(--white); font-family: inherit; transition: all 0.12s;
+    }
+    .period-btn:hover { border-color: var(--red); }
+    .period-btn.active { border-color: var(--red); background: var(--red-lt); box-shadow: 0 0 0 1px var(--red); }
+    .period-btn .pb-date { display: block; font-size: 13px; font-weight: 600; color: var(--black); }
+    .period-btn.active .pb-date { color: var(--red); }
+    .period-btn .pb-note { display: block; font-size: 11px; color: var(--grey); margin-top: 2px; }
+
     /* ── REVIEWS ── */
     .reviews-source {
       font-size: 13px;
@@ -1175,16 +1190,6 @@
     <div>
       <div class="capture-card">
         <div class="capture-card-top">
-          <div class="capture-seasons">
-            <div class="season-pill next">
-              <div class="sp-dot"></div>
-              <span class="sp-label">Декември 2026</span>
-            </div>
-            <div class="season-pill">
-              <div class="sp-dot" style="background:rgba(255,255,255,0.3);"></div>
-              <span>Април 2027</span>
-            </div>
-          </div>
           <div class="capture-card-title">Запазете вашите бройки</div>
           <div class="capture-card-sub">Без плащане сега. Потвърждавате при известие.</div>
         </div>
@@ -1233,7 +1238,20 @@
             </div>
           </div>
 
-          <div class="email-field-wrap">
+          <div class="step-label" style="margin-top:16px;">Желана доставка</div>
+          <div class="period-toggle" id="period-toggle">
+            <button class="period-btn active" onclick="setPeriod('Декември 2026', this)">
+              <span class="pb-date">Декември 2026</span>
+              <span class="pb-note">зимна · преди Коледа</span>
+            </button>
+            <button class="period-btn" onclick="setPeriod('Април 2027', this)">
+              <span class="pb-date">Април 2027</span>
+              <span class="pb-note">лятна · преди сезона</span>
+            </button>
+          </div>
+          <input type="hidden" id="selected-period" value="Декември 2026">
+
+          <div class="email-field-wrap" style="margin-top:12px;">
             <input type="email" class="email-field" placeholder="твоят@имейл.com"
               id="hero-email" autocomplete="email" required>
           </div>
@@ -1582,12 +1600,20 @@
   /* ── WEBHOOK - paste your Apps Script deployment URL below ── */
   const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbwgUTuYGpW9oi2tViH3DXjMhlEgGYXlalE-LpPGtW_1gD0-j3Vu763x8G5-E8tfVdz9/exec';
 
-  function sendToSheets(email, qty, source) {
+  let selectedPeriod = 'Декември 2026';
+  function setPeriod(p, el) {
+    selectedPeriod = p;
+    document.getElementById('selected-period').value = p;
+    document.querySelectorAll('.period-btn').forEach(b => b.classList.remove('active'));
+    el.classList.add('active');
+  }
+
+  function sendToSheets(email, qty, source, period) {
     if (!WEBHOOK_URL || WEBHOOK_URL.startsWith('PASTE')) return;
     fetch(WEBHOOK_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: email, qty: qty, source: source }),
+      body: JSON.stringify({ email: email, qty: qty, source: source, period: period || 'Декември 2026' }),
       mode: 'no-cors'
     }).catch(function() {});
   }
@@ -1600,7 +1626,7 @@
       document.getElementById('hero-email').style.borderColor = 'var(--red)';
       return;
     }
-    sendToSheets(email, selectedQty, 'hero');
+    sendToSheets(email, selectedQty, 'hero', selectedPeriod);
     document.getElementById('form-body').style.display = 'none';
     document.getElementById('success-state').style.display = 'block';
     document.getElementById('trust-strip').style.display = 'none';
