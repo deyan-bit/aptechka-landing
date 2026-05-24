@@ -1,0 +1,1537 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>APTECHKA — Аптечки директно от производителя</title>
+  <meta name="description" content="Внасяме сертифицирани автомобилни аптечки директно от производителя. Без аптечна надценка. Запази брой сега — доставяме декември и април.">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --red:     #C8001E;
+      --red-dk:  #9E0018;
+      --red-lt:  #FFF0F2;
+      --red-bd:  #F5B3BD;
+      --black:   #111111;
+      --white:   #FFFFFF;
+      --paper:   #F5F3F0;
+      --grey:    #888888;
+      --border:  #E5E3E0;
+      --text:    #111111;
+      --muted:   #666666;
+      --green:   #1D9E75;
+      --green-lt:#E1F5EE;
+      --green-dk:#0F6E56;
+      --radius:  8px;
+      --radius-lg: 14px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      color: var(--text);
+      background: var(--white);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── ALERT BAR ── */
+    .alert-bar {
+      background: var(--black);
+      color: var(--white);
+      text-align: center;
+      padding: 11px 20px;
+      font-size: 13px;
+      letter-spacing: 0.01em;
+    }
+    .alert-bar strong { color: var(--red); }
+    .alert-bar .sep { opacity: 0.3; margin: 0 10px; }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(8px);
+      border-bottom: 0.5px solid var(--border);
+      padding: 0 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .nav-mark {
+      width: 36px; height: 36px;
+      background: var(--red);
+      border-radius: 5px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .nav-name {
+      font-size: 20px; font-weight: 500; letter-spacing: -0.04em;
+      color: var(--black); white-space: nowrap;
+    }
+    .nav-name span { color: var(--red); }
+    .nav-right { display: flex; align-items: center; gap: 20px; }
+    .nav-social-proof {
+      font-size: 12px;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .nav-social-proof strong { color: var(--black); font-weight: 500; }
+    .nav-cta {
+      background: var(--red);
+      color: var(--white);
+      border: none;
+      border-radius: var(--radius);
+      padding: 10px 22px;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      cursor: pointer;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: background 0.15s;
+    }
+    .nav-cta:hover { background: var(--red-dk); }
+
+    /* ── HERO ── */
+    .hero-wrap { background: var(--paper); padding: 72px 40px; }
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* Kit image column */
+    .kit-visual {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+    .kit-box {
+      width: 100%;
+      aspect-ratio: 1;
+      background: var(--white);
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius-lg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 32px rgba(0,0,0,0.08);
+      overflow: hidden;
+    }
+    .kit-cert-strip {
+      width: 100%;
+      background: var(--white);
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 10px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+    .kit-cert-row {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 11.5px;
+      color: var(--muted);
+    }
+    .kit-cert-row svg { color: var(--green); flex-shrink: 0; }
+
+    /* ── RESERVE SECTION ── */
+    .reserve-section {
+      background: var(--paper);
+      border-top: 0.5px solid var(--border);
+      padding: 72px 40px;
+    }
+    .reserve-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 480px;
+      gap: 64px;
+      align-items: start;
+    }
+    .reserve-left .section-eyebrow { margin-bottom: 10px; }
+    .reserve-left .section-title { margin-bottom: 14px; }
+    .reserve-left .section-sub { margin-bottom: 24px; }
+    .reserve-perks {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-top: 8px;
+    }
+    .reserve-perk {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .reserve-perk strong { color: var(--black); font-weight: 500; }
+    .rp-icon {
+      width: 32px; height: 32px;
+      background: var(--white);
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      color: var(--red);
+    }
+
+    /* Left column */
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: var(--red-lt);
+      border: 0.5px solid var(--red-bd);
+      border-radius: 100px;
+      padding: 5px 12px 5px 8px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--red);
+      margin-bottom: 22px;
+      letter-spacing: 0.01em;
+    }
+    .eyebrow-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--red);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.25} }
+
+    .hero h1 {
+      font-size: 46px;
+      font-weight: 500;
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+      margin-bottom: 18px;
+      color: var(--black);
+    }
+    .hero h1 .red { color: var(--red); }
+    .hero h1 .strike {
+      text-decoration: line-through;
+      text-decoration-color: var(--red);
+      text-decoration-thickness: 3px;
+      color: var(--muted);
+    }
+
+    .hero-sub {
+      font-size: 16.5px;
+      color: var(--muted);
+      line-height: 1.65;
+      margin-bottom: 28px;
+      max-width: 500px;
+    }
+    .hero-sub strong { color: var(--black); font-weight: 500; }
+
+    /* Rip-off callout inline */
+    .ripoff-callout {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: var(--white);
+      border: 0.5px solid var(--border);
+      border-left: 3px solid var(--red);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      margin-bottom: 28px;
+    }
+    .ripoff-icon {
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+    .ripoff-text {
+      font-size: 13.5px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .ripoff-text strong { color: var(--black); font-weight: 500; }
+
+    /* Hero bullet list */
+    .hero-bullets {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+    .hero-bullets li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .hero-bullets li strong { color: var(--black); font-weight: 500; }
+    .hb-icon {
+      width: 20px; height: 20px;
+      background: var(--green-lt);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+      color: var(--green);
+    }
+
+    /* Trust row */
+    .trust-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-top: 22px;
+    }
+    .trust-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: var(--white);
+      border: 0.5px solid var(--border);
+      border-radius: 6px;
+      padding: 6px 10px;
+      font-size: 11.5px;
+      color: var(--muted);
+      font-weight: 400;
+      white-space: nowrap;
+    }
+    .trust-badge .tb-icon { flex-shrink: 0; }
+    .trust-badge.green { border-color: #A8DEC9; background: var(--green-lt); color: var(--green-dk); }
+    .trust-badge.black { border-color: #333; background: var(--black); color: var(--white); }
+
+    /* ── CAPTURE CARD (right column) ── */
+    .capture-card {
+      background: var(--white);
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: 0 2px 24px rgba(0,0,0,0.06);
+    }
+    .capture-card-top {
+      background: var(--black);
+      padding: 20px 24px 18px;
+    }
+    .capture-seasons {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .season-pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,0.08);
+      border: 0.5px solid rgba(255,255,255,0.14);
+      border-radius: 100px;
+      padding: 5px 11px;
+      font-size: 11.5px;
+      color: rgba(255,255,255,0.7);
+    }
+    .season-pill .sp-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+    }
+    .season-pill.next .sp-dot { background: #FFB800; }
+    .season-pill.next { border-color: rgba(255,184,0,0.3); color: #FFD666; }
+    .season-pill.next .sp-label { color: #FFD666; font-weight: 500; }
+    .capture-card-title {
+      font-size: 18px;
+      font-weight: 500;
+      letter-spacing: -0.03em;
+      color: var(--white);
+      line-height: 1.25;
+    }
+    .capture-card-sub {
+      font-size: 12.5px;
+      color: rgba(255,255,255,0.4);
+      margin-top: 5px;
+    }
+
+    .capture-card-body { padding: 20px 24px 24px; }
+
+    /* Buyer type toggle */
+    .buyer-toggle {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+    .buyer-btn {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 10px 8px;
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--muted);
+      background: var(--white);
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.12s;
+    }
+    .buyer-btn:hover { border-color: var(--black); color: var(--black); }
+    .buyer-btn.active {
+      border-color: var(--black);
+      background: var(--black);
+      color: var(--white);
+      font-weight: 500;
+    }
+
+    /* Quantity step */
+    .step-label {
+      font-size: 10.5px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--grey);
+      margin-bottom: 10px;
+    }
+    .qty-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+    .qty-btn {
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 12px 4px;
+      text-align: center;
+      cursor: pointer;
+      background: var(--white);
+      transition: all 0.12s;
+      -webkit-appearance: none;
+      font-family: inherit;
+    }
+    .qty-btn:hover { border-color: var(--red); }
+    .qty-btn.active {
+      border-color: var(--red);
+      background: var(--red-lt);
+      box-shadow: 0 0 0 1px var(--red);
+    }
+    .qty-btn .qty-num {
+      display: block;
+      font-size: 22px;
+      font-weight: 500;
+      letter-spacing: -0.04em;
+      color: var(--black);
+      line-height: 1;
+    }
+    .qty-btn.active .qty-num { color: var(--red); }
+    .qty-btn .qty-label {
+      display: block;
+      font-size: 9.5px;
+      color: var(--grey);
+      letter-spacing: 0.04em;
+      margin-top: 3px;
+    }
+
+    /* Email field */
+    .email-field-wrap { margin-bottom: 12px; }
+    .email-field {
+      width: 100%;
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 13px 14px;
+      font-size: 14.5px;
+      color: var(--black);
+      font-family: inherit;
+      background: var(--white);
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .email-field::placeholder { color: #AAA; }
+    .email-field:focus {
+      border-color: var(--red);
+      box-shadow: 0 0 0 3px rgba(200,0,30,0.07);
+    }
+
+    .submit-btn {
+      width: 100%;
+      background: var(--red);
+      color: var(--white);
+      border: none;
+      border-radius: var(--radius);
+      padding: 15px;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      font-family: inherit;
+      letter-spacing: -0.01em;
+      transition: background 0.15s, transform 0.1s;
+    }
+    .submit-btn:hover { background: var(--red-dk); }
+    .submit-btn:active { transform: scale(0.99); }
+
+    .form-micro {
+      font-size: 11.5px;
+      color: #AAA;
+      text-align: center;
+      margin-top: 10px;
+      line-height: 1.5;
+    }
+    .form-micro a { color: inherit; text-decoration: underline; }
+
+    /* Price preview inside card */
+    .price-preview {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--paper);
+      border-radius: var(--radius);
+      padding: 12px 14px;
+      margin-bottom: 16px;
+    }
+    .price-preview-label { font-size: 12px; color: var(--muted); }
+    .price-preview-value {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--black);
+    }
+    .price-preview-value .old {
+      color: var(--grey);
+      text-decoration: line-through;
+      font-weight: 400;
+      margin-right: 6px;
+      font-size: 12px;
+    }
+    .price-preview-value .new { color: var(--green-dk); }
+
+    /* Card trust strip */
+    .card-trust-strip {
+      display: flex;
+      gap: 10px;
+      padding: 12px 14px;
+      border-top: 0.5px solid var(--border);
+      flex-wrap: wrap;
+    }
+    .cts-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .cts-item svg { color: var(--green); }
+    .counter-pill {
+      background: var(--red-lt);
+      border: 0.5px solid var(--red-bd);
+      border-radius: 100px;
+      padding: 3px 10px;
+      font-size: 11px;
+      color: var(--red);
+      font-weight: 500;
+      margin-left: auto;
+    }
+
+    /* ── SUCCESS STATE ── */
+    .success-state {
+      display: none;
+      text-align: center;
+      padding: 28px 24px 32px;
+    }
+    .success-icon {
+      width: 56px; height: 56px;
+      background: var(--green-lt);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 16px;
+    }
+    .success-title {
+      font-size: 19px;
+      font-weight: 500;
+      letter-spacing: -0.03em;
+      margin-bottom: 8px;
+    }
+    .success-sub {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.6;
+      max-width: 280px;
+      margin: 0 auto;
+    }
+
+    /* ── SOCIAL PROOF STRIP ── */
+    .proof-strip {
+      border-top: 0.5px solid var(--border);
+      border-bottom: 0.5px solid var(--border);
+      background: var(--white);
+      padding: 24px 40px 28px;
+    }
+    .proof-strip-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .proof-stats-row {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .proof-ial-row {
+      display: flex;
+      justify-content: center;
+    }
+    .proof-stat {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .proof-stat-num {
+      font-size: 26px;
+      font-weight: 500;
+      letter-spacing: -0.04em;
+      color: var(--black);
+    }
+    .proof-stat-num span { color: var(--red); }
+    .proof-stat-label {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.4;
+      max-width: 120px;
+    }
+    .proof-divider {
+      width: 0.5px;
+      height: 40px;
+      background: var(--border);
+    }
+    .ial-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      background: var(--paper);
+      border: 1px solid var(--red-bd);
+      border-radius: var(--radius-lg);
+      padding: 14px 24px;
+    }
+    .ial-seal {
+      width: 48px; height: 48px;
+      border: 2.5px solid var(--red);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      background: var(--red-lt);
+    }
+    .ial-seal-inner {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--red);
+      letter-spacing: -0.02em;
+      text-align: center;
+      line-height: 1.1;
+    }
+    .ial-text { font-size: 13px; color: var(--muted); line-height: 1.45; }
+    .ial-text strong { color: var(--black); font-weight: 600; font-size: 14px; display: block; margin-bottom: 2px; }
+
+    /* ── HOW IT WORKS ── */
+    .section { padding: 72px 40px; }
+    .section-inner { max-width: 1100px; margin: 0 auto; }
+    .section-alt { background: var(--paper); }
+
+    .section-eyebrow {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 10px;
+    }
+    .section-title {
+      font-size: 34px;
+      font-weight: 500;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 14px;
+    }
+    .section-sub {
+      font-size: 16px;
+      color: var(--muted);
+      line-height: 1.65;
+      max-width: 540px;
+    }
+
+    /* Timeline */
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0;
+      margin-top: 52px;
+      position: relative;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      top: 19px;
+      left: calc(10% + 20px);
+      right: calc(10% + 20px);
+      height: 0.5px;
+      background: var(--border);
+    }
+    .tl-step { text-align: center; padding: 0 16px; }
+    .tl-dot {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 16px;
+      font-size: 14px;
+      font-weight: 500;
+      position: relative;
+      z-index: 1;
+    }
+    .tl-dot.active { background: var(--red); color: var(--white); }
+    .tl-dot.future { background: var(--white); border: 0.5px solid var(--border); color: var(--grey); }
+    .tl-date {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--grey);
+      margin-bottom: 6px;
+    }
+    .tl-date.active { color: var(--red); }
+    .tl-title {
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      margin-bottom: 5px;
+    }
+    .tl-desc { font-size: 12.5px; color: var(--muted); line-height: 1.5; }
+
+    /* ── COMPARISON TABLE ── */
+    .compare-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 48px;
+    }
+    .compare-card {
+      border-radius: var(--radius-lg);
+      padding: 28px;
+    }
+    .compare-card.bad {
+      background: var(--white);
+      border: 0.5px solid var(--border);
+    }
+    .compare-card.good {
+      background: var(--black);
+      border: 0.5px solid var(--black);
+    }
+    .compare-card-label {
+      font-size: 10.5px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .compare-card.bad .compare-card-label { color: var(--grey); }
+    .compare-card.good .compare-card-label { color: rgba(255,255,255,0.4); }
+    .compare-price-row {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom-width: 0.5px;
+      border-bottom-style: solid;
+    }
+    .compare-card.bad .compare-price-row { border-color: var(--border); }
+    .compare-card.good .compare-price-row { border-color: rgba(255,255,255,0.1); }
+    .compare-price {
+      font-size: 36px;
+      font-weight: 500;
+      letter-spacing: -0.05em;
+      line-height: 1;
+    }
+    .compare-card.bad .compare-price { color: var(--black); }
+    .compare-card.good .compare-price { color: var(--white); }
+    .compare-price-note {
+      font-size: 13px;
+    }
+    .compare-card.bad .compare-price-note { color: var(--muted); }
+    .compare-card.good .compare-price-note { color: rgba(255,255,255,0.5); }
+    .compare-items { display: flex; flex-direction: column; gap: 9px; }
+    .compare-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+      font-size: 13.5px;
+      line-height: 1.45;
+    }
+    .compare-card.bad .compare-item { color: var(--muted); }
+    .compare-card.good .compare-item { color: rgba(255,255,255,0.65); }
+    .ci-icon {
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 9px;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .ci-icon.bad { background: #FCEBEB; color: var(--red); }
+    .ci-icon.good { background: rgba(29,158,117,0.18); color: #3ECFA0; }
+    .compare-card-title {
+      font-size: 20px;
+      font-weight: 500;
+      letter-spacing: -0.03em;
+      margin-bottom: 16px;
+    }
+    .compare-card.bad .compare-card-title { color: var(--black); }
+    .compare-card.good .compare-card-title { color: var(--white); }
+
+    /* ── FAQ ── */
+    .faq-list {
+      margin-top: 48px;
+      display: flex;
+      flex-direction: column;
+      border-top: 0.5px solid var(--border);
+    }
+    .faq-item { border-bottom: 0.5px solid var(--border); }
+    .faq-q {
+      width: 100%;
+      background: none;
+      border: none;
+      text-align: left;
+      padding: 20px 0;
+      font-size: 15.5px;
+      font-weight: 500;
+      color: var(--black);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      font-family: inherit;
+      letter-spacing: -0.01em;
+    }
+    .faq-q:hover { color: var(--red); }
+    .faq-icon { flex-shrink: 0; font-size: 22px; font-weight: 300; color: var(--grey); transition: transform 0.2s; }
+    .faq-a {
+      font-size: 14.5px;
+      color: var(--muted);
+      line-height: 1.65;
+      padding-bottom: 20px;
+      display: none;
+      max-width: 680px;
+    }
+    .faq-item.open .faq-a { display: block; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); color: var(--red); }
+    .faq-item.open .faq-q { color: var(--red); }
+
+    /* ── BOTTOM CTA ── */
+    .bottom-cta {
+      background: var(--red);
+      padding: 72px 40px;
+      text-align: center;
+    }
+    .bottom-cta-inner { max-width: 600px; margin: 0 auto; }
+    .bottom-cta h2 {
+      font-size: 36px;
+      font-weight: 500;
+      letter-spacing: -0.04em;
+      color: var(--white);
+      line-height: 1.1;
+      margin-bottom: 14px;
+    }
+    .bottom-cta p {
+      font-size: 16px;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 32px;
+      line-height: 1.6;
+    }
+    .bottom-form-wrap {
+      max-width: 460px;
+      margin: 0 auto;
+    }
+    .bottom-qty-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .bottom-qty-label {
+      font-size: 13px;
+      color: rgba(255,255,255,0.55);
+      white-space: nowrap;
+    }
+    .bottom-qty-select {
+      flex: 1;
+      background: rgba(255,255,255,0.12);
+      border: 0.5px solid rgba(255,255,255,0.25);
+      border-radius: var(--radius);
+      padding: 10px 14px;
+      font-size: 14px;
+      color: var(--white);
+      font-family: inherit;
+      outline: none;
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='rgba(255,255,255,0.4)' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      padding-right: 34px;
+    }
+    .bottom-qty-select:focus { border-color: rgba(255,255,255,0.5); }
+    .bottom-qty-select option { background: var(--red-dk); color: var(--white); }
+    .bottom-form {
+      display: flex;
+      gap: 10px;
+    }
+    .bottom-input {
+      flex: 1;
+      background: rgba(255,255,255,0.12);
+      border: 0.5px solid rgba(255,255,255,0.25);
+      border-radius: var(--radius);
+      padding: 13px 16px;
+      font-size: 14px;
+      color: var(--white);
+      font-family: inherit;
+      outline: none;
+    }
+    .bottom-input::placeholder { color: rgba(255,255,255,0.4); }
+    .bottom-input:focus { border-color: rgba(255,255,255,0.5); }
+    .bottom-submit {
+      background: var(--white);
+      color: var(--red);
+      border: none;
+      border-radius: var(--radius);
+      padding: 13px 22px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      white-space: nowrap;
+      transition: background 0.15s;
+    }
+    .bottom-submit:hover { background: #f0f0f0; }
+    .bottom-note {
+      font-size: 12px;
+      color: rgba(255,255,255,0.35);
+      margin-top: 12px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--black);
+      color: var(--white);
+      padding: 40px;
+    }
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .footer-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .footer-mark {
+      width: 28px; height: 28px;
+      background: var(--red);
+      border-radius: 3px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .footer-name { font-size: 16px; font-weight: 500; letter-spacing: -0.03em; color: var(--white); }
+    .footer-name span { color: var(--red); }
+    .footer-tagline { font-size: 11px; color: #555; margin-top: 2px; }
+    .footer-right { font-size: 12px; color: #555; text-align: right; }
+    .footer-right a { color: #555; text-decoration: none; }
+    .footer-right a:hover { color: var(--white); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 880px) {
+      nav { padding: 0 20px; }
+      .nav-social-proof { display: none; }
+      .hero-wrap { padding: 44px 20px 48px; }
+      .hero { grid-template-columns: 1fr; gap: 40px; }
+      .kit-visual { order: -1; max-width: 320px; margin: 0 auto; width: 100%; }
+      .hero h1 { font-size: 34px; }
+      .hero-sub { font-size: 15px; }
+      .reserve-section { padding: 48px 20px; }
+      .reserve-inner { grid-template-columns: 1fr; gap: 40px; }
+      .proof-strip { padding: 20px; }
+      .proof-strip-inner { gap: 16px; }
+      .proof-divider { display: none; }
+      .section { padding: 48px 20px; }
+      .section-title { font-size: 26px; }
+      .timeline { grid-template-columns: 1fr 1fr; gap: 24px; max-width: 100%; }
+      .timeline::before { display: none; }
+      .compare-grid { grid-template-columns: 1fr; }
+      .bottom-form { flex-direction: column; }
+      .bottom-cta { padding: 48px 20px; }
+      .bottom-cta h2 { font-size: 26px; }
+      footer { padding: 32px 20px; }
+      .footer-inner { flex-direction: column; align-items: flex-start; }
+      .footer-right { text-align: left; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ALERT BAR — pain-point priming -->
+<div class="alert-bar">
+  Внос на аптечки директно от производителите — за <strong>частни лица и търговци.</strong> Без посредници и излишна надценка.
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="nav-mark">
+      <svg width="18" height="18" viewBox="0 0 22 22" fill="none">
+        <rect x="8" y="2" width="6" height="18" rx="1.5" fill="white"/>
+        <rect x="2" y="8" width="18" height="6" rx="1.5" fill="white"/>
+      </svg>
+    </div>
+    <div>
+      <div class="nav-name"><span>APT</span>ECHKA</div>
+    </div>
+  </a>
+  <div class="nav-right">
+    <div class="nav-social-proof">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#1D9E75" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      <span>Вече <strong id="counter-nav">847</strong> семейства запазиха бройки</span>
+    </div>
+    <a href="#reserve" class="nav-cta">Запази брой →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero-wrap">
+  <div class="hero">
+
+    <!-- LEFT: copy -->
+    <div class="hero-content">
+      <h1>Автомобилна аптечка<br><span class="red">DIN 13164:2022</span><br>директно от производител</h1>
+
+      <p class="hero-sub">
+        Доставяме аптечки от водещите европейски производители точно навреме, за да покриете новите изисквания в Гърция.
+      </p>
+
+      <ul class="hero-bullets">
+        <li>
+          <div class="hb-icon">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <span><strong>Максимален срок на годност</strong> — прясна стока директно от завода, не складирана с години</span>
+        </li>
+        <li>
+          <div class="hb-icon">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <span><strong>Ще ви подсетим кога да платите</strong> — уведомление преди всяка доставка с точна цена и без задължение</span>
+        </li>
+        <li>
+          <div class="hb-icon">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <span><strong>Ще ви напомним когато изтича старата аптечка</strong> — никога повече на границата с невалидна аптечка</span>
+        </li>
+      </ul>
+
+      <div class="trust-row">
+        <div class="trust-badge green">
+          <svg class="tb-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          CE сертифицирани
+        </div>
+        <div class="trust-badge green">
+          <svg class="tb-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          Отговарят на изискванията на ИАЛ
+        </div>
+        <div class="trust-badge">
+          <svg class="tb-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Директен внос от производителя
+        </div>
+        <div class="trust-badge">
+          <svg class="tb-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+          Без задължение при записване
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Kit image -->
+    <div class="kit-visual">
+      <div class="kit-box">
+        <img src="kit.jpg" alt="Автомобилна аптечка DIN 13164:2022 — директно от производителя" style="width:100%;height:100%;object-fit:contain;padding:20px;">
+      </div>
+      <div class="kit-cert-strip">
+        <div class="kit-cert-row">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          DIN 13164:2022 — 16 задължителни артикула
+        </div>
+        <div class="kit-cert-row">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          CE сертифицирана · отговаря на изискванията на ИАЛ
+        </div>
+        <div class="kit-cert-row">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          Максимален срок на годност — прясна стока от завода
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- RESERVATION SECTION -->
+<div class="reserve-section" id="reserve">
+  <div class="reserve-inner">
+
+    <!-- Left: context copy -->
+    <div class="reserve-left">
+      <div class="section-eyebrow">Запази брой</div>
+      <div class="section-title" style="font-size:30px;">Следваща доставка:<br>Декември 2026</div>
+      <p class="section-sub">Запишете имейл и брой сега — без плащане. Ще ви уведомим с точна цена преди всяка доставка и вие решавате дали да потвърдите.</p>
+      <div class="reserve-perks">
+        <div class="reserve-perk">
+          <div class="rp-icon">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          </div>
+          <span><strong>Декември 2026</strong> — зимна доставка преди коледните пътувания</span>
+        </div>
+        <div class="reserve-perk">
+          <div class="rp-icon">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <span><strong>Април 2027</strong> — лятна доставка преди туристическия сезон</span>
+        </div>
+        <div class="reserve-perk">
+          <div class="rp-icon">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+          </div>
+          <span><strong>Автоматично напомняне</strong> когато старата ви аптечка наближава края на срока</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: capture card -->
+    <div>
+      <div class="capture-card">
+        <div class="capture-card-top">
+          <div class="capture-seasons">
+            <div class="season-pill next">
+              <div class="sp-dot"></div>
+              <span class="sp-label">Декември 2026</span>
+            </div>
+            <div class="season-pill">
+              <div class="sp-dot" style="background:rgba(255,255,255,0.3);"></div>
+              <span>Април 2027</span>
+            </div>
+          </div>
+          <div class="capture-card-title">Запазете вашите бройки</div>
+          <div class="capture-card-sub">Без плащане сега. Потвърждавате при известие.</div>
+        </div>
+
+        <div class="capture-card-body" id="form-body">
+
+          <!-- Buyer type -->
+          <div class="step-label" style="margin-bottom:8px;">Резервирам като</div>
+          <div class="buyer-toggle" id="buyer-toggle">
+            <button class="buyer-btn active" onclick="setBuyer('individual', this)">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              Частно лице
+            </button>
+            <button class="buyer-btn" onclick="setBuyer('company', this)">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>
+              Фирма / търговец
+            </button>
+          </div>
+          <input type="hidden" id="buyer-type" value="individual">
+
+          <div class="step-label" style="margin-top:16px;">Колко аптечки ви трябват?</div>
+          <div class="qty-grid">
+            <button class="qty-btn" onclick="selectQty(1, this)">
+              <span class="qty-num">1</span>
+              <span class="qty-label">бройка</span>
+            </button>
+            <button class="qty-btn active" onclick="selectQty(2, this)">
+              <span class="qty-num">2</span>
+              <span class="qty-label">коли</span>
+            </button>
+            <button class="qty-btn" onclick="selectQty(3, this)">
+              <span class="qty-num">3</span>
+              <span class="qty-label">семейство</span>
+            </button>
+            <button class="qty-btn" onclick="selectQty(4, this)">
+              <span class="qty-num">4+</span>
+              <span class="qty-label">повече</span>
+            </button>
+          </div>
+
+          <div class="price-preview">
+            <div class="price-preview-label">Очаквана цена при директен внос</div>
+            <div class="price-preview-value">
+              <span class="old" id="price-old">€60+</span>
+              <span class="new" id="price-new">~€24</span>
+            </div>
+          </div>
+
+          <div class="email-field-wrap">
+            <input type="email" class="email-field" placeholder="твоят@имейл.com"
+              id="hero-email" autocomplete="email" required>
+          </div>
+
+          <button class="submit-btn" onclick="handleHeroSubmit()">
+            Запази <span id="qty-in-btn">2 бройки</span> →
+          </button>
+
+          <p class="form-micro">
+            Без плащане сега. Ще получиш имейл с точна цена преди доставката.<br>
+            <a href="#">Политика за поверителност</a> · Без спам.
+          </p>
+        </div>
+
+        <div class="success-state" id="success-state">
+          <div class="success-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1D9E75" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div class="success-title">Записан! 🎉</div>
+          <p class="success-sub">Ще те уведомим по имейл веднага щом отворим потвърждение за декемврийската доставка. Без задължение.</p>
+        </div>
+
+        <div class="card-trust-strip" id="trust-strip">
+          <div class="cts-item">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            CE маркировка
+          </div>
+          <div class="cts-item">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            ИАЛ съответствие
+          </div>
+          <div class="cts-item">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            Без риск
+          </div>
+          <div class="counter-pill" id="counter-badge">847 запазени</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SOCIAL PROOF STRIP -->
+<div class="proof-strip">
+  <div class="proof-strip-inner">
+    <div class="proof-stats-row">
+      <div class="proof-stat">
+        <div class="proof-stat-num">2<span>×</span></div>
+        <div class="proof-stat-label">доставки годишно — декември и април</div>
+      </div>
+      <div class="proof-divider"></div>
+      <div class="proof-stat">
+        <div class="proof-stat-num">~<span>50%</span></div>
+        <div class="proof-stat-label">по-ниска цена от средната аптека</div>
+      </div>
+      <div class="proof-divider"></div>
+      <div class="proof-stat">
+        <div class="proof-stat-num">100<span>%</span></div>
+        <div class="proof-stat-label">CE сертифицирани от завода</div>
+      </div>
+    </div>
+    <div class="proof-ial-row">
+      <div class="ial-badge">
+        <div class="ial-seal">
+          <div class="ial-seal-inner">ИАЛ</div>
+        </div>
+        <div class="ial-text">
+          <strong>Съответствие с ИАЛ</strong>
+          Всички консумативи отговарят на изискванията на Изпълнителна агенция по лекарствата
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<div class="section">
+  <div class="section-inner">
+    <div class="section-eyebrow">Как работи</div>
+    <div class="section-title">Два пъти годишно.<br>Точно навреме.</div>
+    <p class="section-sub">Внасяме преди сезона, когато нуждата е най-голяма. Ти просто ни казваш колко броя ти трябват.</p>
+
+    <div class="timeline">
+      <div class="tl-step">
+        <div class="tl-dot active">1</div>
+        <div class="tl-date active">Сега</div>
+        <div class="tl-title">Запази брой</div>
+        <p class="tl-desc">Без плащане. Само кажи колко аптечки ти трябват и остави имейл.</p>
+      </div>
+      <div class="tl-step">
+        <div class="tl-dot future">2</div>
+        <div class="tl-date">Ноември</div>
+        <div class="tl-title">Получаваш потвърждение</div>
+        <p class="tl-desc">Изпращаме имейл с точна цена, фактура и опция за плащане.</p>
+      </div>
+      <div class="tl-step">
+        <div class="tl-dot future">3</div>
+        <div class="tl-date">Декември</div>
+        <div class="tl-title">Доставяме до теб</div>
+        <p class="tl-desc">Директно до Еконт или Спиди — преди зимния сезон и коледното пътуване.</p>
+      </div>
+      <div class="tl-step">
+        <div class="tl-dot future">4</div>
+        <div class="tl-date">Април 2027</div>
+        <div class="tl-title">Лятна доставка</div>
+        <p class="tl-desc">Втора доставка преди летния сезон — за тези, пропуснали зимата.</p>
+      </div>
+      <div class="tl-step">
+        <div class="tl-dot future" style="background:var(--green-lt); border-color:#A8DEC9; color:var(--green);">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+        </div>
+        <div class="tl-date" style="color:var(--green);">Автоматично</div>
+        <div class="tl-title">Напомняне за изтичане</div>
+        <p class="tl-desc">Уведомяваме ви когато старата ви аптечка наближава края на срока си — никога повече забравена аптечка.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- COMPARE: Apteka vs Aptechka -->
+<div class="section section-alt">
+  <div class="section-inner">
+    <div class="section-eyebrow">Защо директен внос</div>
+    <div class="section-title">Защо да плащаш повече?<br>За остарял продукт.</div>
+    <p class="section-sub">Аптеките са посредници — купуват на едро от търговци като нас и препродават с висока надценка. Сайтовете за автомобилни стоки правят същото. Само при нас ще получите аптечка произведена максимално близо до момента на покупката.</p>
+    <div class="compare-grid">
+      <div class="compare-card bad">
+        <div class="compare-card-label">Аптека / веригата</div>
+        <div class="compare-card-title">Плащаш €30+<br>за €12 продукт.</div>
+        <div class="compare-price-row">
+          <span class="compare-price">€30+</span>
+          <span class="compare-price-note">цена при опортюнистични онлайн сайтове</span>
+        </div>
+        <div class="compare-items">
+          <div class="compare-item"><div class="ci-icon bad">✕</div>Купена на едро с множество нива надценка</div>
+          <div class="compare-item"><div class="ci-icon bad">✕</div>Може да е складирана — съкратен срок на годност</div>
+          <div class="compare-item"><div class="ci-icon bad">✕</div>Не винаги CE маркирана по актуален стандарт</div>
+          <div class="compare-item"><div class="ci-icon bad">✕</div>Никой не ви напомня кога изтича и кога да смените</div>
+        </div>
+      </div>
+
+      <div class="compare-card good">
+        <div class="compare-card-label">APTECHKA — директен внос</div>
+        <div class="compare-card-title" style="color:white;">Завод → теб.<br>Без посредници.</div>
+        <div class="compare-price-row">
+          <span class="compare-price">~€12</span>
+          <span class="compare-price-note">целева цена при директен внос</span>
+        </div>
+        <div class="compare-items">
+          <div class="compare-item"><div class="ci-icon good">✓</div>Директно от сертифициран производител в Германия</div>
+          <div class="compare-item"><div class="ci-icon good">✓</div>Прясна стока с пълен срок на годност</div>
+          <div class="compare-item"><div class="ci-icon good">✓</div>CE маркировка, отговаря на изискванията на ИАЛ</div>
+          <div class="compare-item"><div class="ci-icon good">✓</div>Уведомяваме те при следващата доставка автоматично</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FAQ -->
+<div class="section">
+  <div class="section-inner">
+    <div class="section-eyebrow">Въпроси</div>
+    <div class="section-title">Всичко, което<br>трябва да знаеш</div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Защо да запазя сега, а не да чакам?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">Всяка доставка е с фиксирано количество — внасяме точно толкова, колкото са запазените бройки плюс малък резерв. Ако не си в списъка, изчакваш до следващата доставка. Записването е без задължение и без плащане — просто запазваш своето място.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Какъв стандарт отговарят аптечките?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">Всички аптечки ще отговарят на изискванията на Изпълнителна агенция по лекарствата (ИАЛ) и ще носят CE маркировка. Набавяме ги от сертифицирани германски и европейски производители с документация за произход и съответствие.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Кога точно ще разбера цената и ще платя?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">Ноември ще изпратим имейл с точната цена. Тогава потвърждаваш дали искаш да продължиш и плащаш. Ако откажеш — никакво задължение, никакви такси.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Кога ще стигне до мен?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">Доставяме в рамките на декември — преди коледните пътувания и зимния сезон. Ще получиш известие с проследяване до офис на Еконт или Спиди. Доставката до офис е безплатна.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Ами ако пропусна декемврийската доставка?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">Имаме и априлска доставка (преди летния сезон). Просто ще те преместим в следващия списък. И в двата случая те уведомяваме навреме.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BOTTOM CTA -->
+<div class="bottom-cta">
+  <div class="bottom-cta-inner">
+    <h2>Запази своите бройки<br>преди да свърши списъкът</h2>
+    <p>Следваща доставка: декември 2026. Без плащане сега — само имейл за известие.</p>
+    <div class="bottom-form-wrap">
+      <form onsubmit="handleBottomSubmit(event)">
+        <div class="bottom-qty-row">
+          <span class="bottom-qty-label">Брой аптечки:</span>
+          <select class="bottom-qty-select" id="bottom-qty">
+            <option value="1">1 бройка</option>
+            <option value="2" selected>2 бройки</option>
+            <option value="3">3 бройки</option>
+            <option value="4">4 бройки</option>
+            <option value="5">5 бройки</option>
+            <option value="10">10 бройки</option>
+            <option value="20">20+ (търговец)</option>
+          </select>
+        </div>
+        <div class="bottom-form">
+          <input type="email" class="bottom-input" placeholder="твоят@имейл.com" required id="bottom-email">
+          <button type="submit" class="bottom-submit">Запази место →</button>
+        </div>
+      </form>
+    </div>
+    <div id="bottom-success" style="display:none; color:rgba(255,255,255,0.8); font-size:14px; margin-top:16px;">
+      ✓ Записан! Ще те уведомим преди декемврийската доставка.
+    </div>
+    <p class="bottom-note">Без задължение. Без спам. Само едно известие преди доставката.</p>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <a href="#" class="footer-logo">
+        <div class="footer-mark">
+          <svg width="14" height="14" viewBox="0 0 22 22" fill="none">
+            <rect x="8" y="2" width="6" height="18" rx="1.5" fill="white"/>
+            <rect x="2" y="8" width="18" height="6" rx="1.5" fill="white"/>
+          </svg>
+        </div>
+        <div>
+          <div class="footer-name"><span>APT</span>ECHKA</div>
+          <div class="footer-tagline">карай спокойно.</div>
+        </div>
+      </a>
+    </div>
+    <div class="footer-right">
+      <div>© 2026 APTECHKA · aptechka.bg</div>
+      <div style="margin-top:4px;">
+        <a href="#">Политика за поверителност</a> · <a href="#">Условия за ползване</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  /* ── BUYER TYPE ── */
+  function setBuyer(type, el) {
+    document.querySelectorAll('.buyer-btn').forEach(b => b.classList.remove('active'));
+    el.classList.add('active');
+    document.getElementById('buyer-type').value = type;
+  }
+
+  /* ── QUANTITY SELECTOR ── */
+  let selectedQty = 2;
+  const prices = {
+    1: { old: '€30+', new: '~€12' },
+    2: { old: '€60+', new: '~€24' },
+    3: { old: '€90+', new: '~€36' },
+    4: { old: '€120+', new: '~€48+' }
+  };
+  const labels = { 1: '1 бройка', 2: '2 бройки', 3: '3 бройки', 4: '4+ бройки' };
+
+  function selectQty(n, el) {
+    document.querySelectorAll('.qty-btn').forEach(b => b.classList.remove('active'));
+    el.classList.add('active');
+    selectedQty = n;
+    const p = prices[n] || prices[4];
+    document.getElementById('price-old').textContent = p.old;
+    document.getElementById('price-new').textContent = p.new;
+    document.getElementById('qty-in-btn').textContent = labels[n] || '4+ бройки';
+  }
+
+  /* ── HERO FORM SUBMIT ── */
+  function handleHeroSubmit() {
+    const email = document.getElementById('hero-email').value.trim();
+    if (!email || !email.includes('@')) {
+      document.getElementById('hero-email').focus();
+      document.getElementById('hero-email').style.borderColor = 'var(--red)';
+      return;
+    }
+    // Here you'd POST to your email service (Formspree, Brevo, etc.)
+    document.getElementById('form-body').style.display = 'none';
+    document.getElementById('success-state').style.display = 'block';
+    document.getElementById('trust-strip').style.display = 'none';
+    incrementCounter();
+  }
+
+  /* ── BOTTOM FORM SUBMIT ── */
+  function handleBottomSubmit(e) {
+    e.preventDefault();
+    const qty = document.getElementById('bottom-qty').value;
+    // qty available for POST to email service alongside email
+    document.querySelector('.bottom-form-wrap').style.display = 'none';
+    document.getElementById('bottom-success').style.display = 'block';
+    incrementCounter();
+  }
+
+  /* ── LIVE COUNTER (social proof) ── */
+  let baseCount = 847;
+  function incrementCounter() {
+    baseCount++;
+    document.getElementById('counter-nav').textContent = baseCount;
+    document.getElementById('counter-badge').textContent = baseCount + ' запазени';
+  }
+
+  // Simulate slow organic growth in counter for social proof
+  setInterval(() => {
+    if (Math.random() < 0.3) {
+      baseCount++;
+      document.getElementById('counter-nav').textContent = baseCount;
+      document.getElementById('counter-badge').textContent = baseCount + ' запазени';
+    }
+  }, 8000);
+
+  /* ── FAQ TOGGLE ── */
+  function toggleFaq(btn) {
+    const item = btn.closest('.faq-item');
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!wasOpen) item.classList.add('open');
+  }
+</script>
+</body>
+</html>
