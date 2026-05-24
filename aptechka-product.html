@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="favicon.png" type="image/png">
+  <title>Автомобилна аптечка DIN 13164:2022 — APTECHKA</title>
+  <meta name="description" content="Сертифицирана автомобилна аптечка по DIN 13164:2022. Директно от производителя. CE маркировка, ИАЛ съответствие. Цена ~€12.">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --red:     #C8001E;
+      --red-dk:  #9E0018;
+      --red-lt:  #FFF0F2;
+      --red-bd:  #F5B3BD;
+      --black:   #111111;
+      --white:   #FFFFFF;
+      --paper:   #F5F3F0;
+      --grey:    #888888;
+      --border:  #E5E3E0;
+      --text:    #111111;
+      --muted:   #666666;
+      --radius:  8px;
+      --radius-lg: 14px;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      color: var(--text);
+      background: var(--white);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(8px);
+      border-bottom: 0.5px solid var(--border);
+      padding: 0 40px;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 64px;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .nav-mark {
+      width: 36px; height: 36px; background: var(--red); border-radius: 5px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .nav-name { font-size: 20px; font-weight: 500; letter-spacing: -0.04em; color: var(--black); }
+    .nav-name span { color: var(--red); }
+    .nav-back {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 13px; color: var(--muted); text-decoration: none;
+      border: 0.5px solid var(--border); border-radius: var(--radius);
+      padding: 8px 14px;
+    }
+    .nav-back:hover { color: var(--black); border-color: var(--black); }
+    .nav-cta {
+      background: var(--red); color: var(--white); border: none;
+      border-radius: var(--radius); padding: 10px 22px;
+      font-size: 13px; font-weight: 500; cursor: pointer;
+      text-decoration: none; white-space: nowrap;
+    }
+    .nav-cta:hover { background: var(--red-dk); }
+    .nav-right { display: flex; align-items: center; gap: 12px; }
+
+    /* ── PRODUCT HERO ── */
+    .product-hero {
+      max-width: 1100px; margin: 0 auto;
+      padding: 48px 40px 56px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: start;
+    }
+
+    /* Gallery */
+    .gallery { display: flex; flex-direction: column; gap: 10px; position: sticky; top: 80px; }
+    .gallery-main {
+      width: 100%; aspect-ratio: 1;
+      background: var(--paper);
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden; cursor: zoom-in;
+    }
+    .gallery-main img { width: 100%; height: 100%; object-fit: contain; padding: 32px; transition: transform 0.3s; }
+    .gallery-main:hover img { transform: scale(1.04); }
+    .gallery-thumbs { display: flex; gap: 8px; }
+    .gallery-thumb {
+      width: 72px; height: 72px; border-radius: var(--radius);
+      border: 0.5px solid var(--border); overflow: hidden;
+      cursor: pointer; background: var(--paper); flex-shrink: 0;
+      transition: border-color 0.15s;
+    }
+    .gallery-thumb:hover { border-color: var(--red); }
+    .gallery-thumb.active { border-color: var(--red); box-shadow: 0 0 0 1.5px var(--red); }
+    .gallery-thumb img { width: 100%; height: 100%; object-fit: cover; }
+
+    /* Info column */
+    .product-info { padding-top: 4px; }
+    .product-label {
+      font-size: 11.5px; font-weight: 500; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 10px;
+    }
+    .product-title {
+      font-size: 34px; font-weight: 500; letter-spacing: -0.04em;
+      line-height: 1.1; color: var(--black); margin-bottom: 16px;
+    }
+    .product-title span { color: var(--red); }
+    .product-rating {
+      display: flex; align-items: center; gap: 8px;
+      margin-bottom: 20px;
+    }
+    .stars { color: #FFB800; font-size: 14px; letter-spacing: 2px; }
+    .rating-text { font-size: 13px; color: var(--muted); }
+    .product-price {
+      display: flex; align-items: baseline; gap: 12px;
+      margin-bottom: 24px;
+    }
+    .price-main { font-size: 38px; font-weight: 600; letter-spacing: -0.04em; color: var(--red); }
+    .price-old { font-size: 18px; color: var(--grey); text-decoration: line-through; }
+    .price-note { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+    /* Badges row */
+    .badge-row { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 28px; }
+    .badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: var(--red-lt); border: 0.5px solid var(--red-bd);
+      border-radius: 6px; padding: 5px 10px;
+      font-size: 11.5px; color: var(--red); font-weight: 500;
+    }
+    .badge.grey { background: var(--paper); border-color: var(--border); color: var(--muted); font-weight: 400; }
+
+    /* Qty row */
+    .qty-section { margin-bottom: 16px; }
+    .qty-label-row {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 10px;
+    }
+    .qty-step-label { font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--grey); }
+    .qty-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;
+      margin-bottom: 16px;
+    }
+    .qty-btn {
+      border: 0.5px solid var(--border); border-radius: var(--radius);
+      padding: 12px 4px; text-align: center; cursor: pointer;
+      background: var(--white); transition: all 0.12s;
+      font-family: inherit;
+    }
+    .qty-btn:hover { border-color: var(--red); }
+    .qty-btn.active { border-color: var(--red); background: var(--red-lt); box-shadow: 0 0 0 1px var(--red); }
+    .qty-btn .qn { display: block; font-size: 22px; font-weight: 500; letter-spacing: -0.04em; color: var(--black); line-height: 1; }
+    .qty-btn.active .qn { color: var(--red); }
+    .qty-btn .ql { display: block; font-size: 9.5px; color: var(--grey); margin-top: 3px; }
+
+    /* Price preview */
+    .price-row {
+      display: flex; align-items: center; justify-content: space-between;
+      background: var(--paper); border-radius: var(--radius); padding: 12px 14px; margin-bottom: 14px;
+    }
+    .price-row-label { font-size: 12px; color: var(--muted); }
+    .price-row-val { font-size: 14px; font-weight: 600; color: var(--red); letter-spacing: -0.02em; }
+    .price-row-val .old { color: var(--grey); text-decoration: line-through; font-weight: 400; margin-right: 6px; font-size: 12px; }
+
+    /* Email field */
+    .email-wrap { margin-bottom: 10px; }
+    .email-field {
+      width: 100%; border: 0.5px solid var(--border); border-radius: var(--radius);
+      padding: 13px 14px; font-size: 14.5px; color: var(--black);
+      font-family: inherit; outline: none; transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .email-field::placeholder { color: #AAA; }
+    .email-field:focus { border-color: var(--red); box-shadow: 0 0 0 3px rgba(200,0,30,0.07); }
+
+    .reserve-btn {
+      width: 100%; background: var(--red); color: var(--white); border: none;
+      border-radius: var(--radius); padding: 16px;
+      font-size: 16px; font-weight: 500; cursor: pointer; font-family: inherit;
+      letter-spacing: -0.01em; transition: background 0.15s;
+      margin-bottom: 10px;
+    }
+    .reserve-btn:hover { background: var(--red-dk); }
+    .form-micro { font-size: 11.5px; color: #AAA; text-align: center; line-height: 1.5; }
+    .form-micro a { color: inherit; }
+
+    .success-state { display: none; text-align: center; padding: 24px 0; }
+    .success-state .si {
+      width: 52px; height: 52px; background: var(--red-lt); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; margin: 0 auto 14px;
+    }
+    .success-state .st { font-size: 18px; font-weight: 500; letter-spacing: -0.03em; margin-bottom: 6px; }
+    .success-state .ss { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+    /* Perks below CTA */
+    .perks { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+    .perk {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 13px; color: var(--muted); line-height: 1.5;
+    }
+    .perk-icon { color: var(--red); flex-shrink: 0; margin-top: 2px; }
+    .perk strong { color: var(--black); font-weight: 500; }
+
+    /* ── PRODUCT DETAILS SECTION ── */
+    .details-section {
+      background: var(--paper); border-top: 0.5px solid var(--border);
+      padding: 64px 40px;
+    }
+    .details-inner { max-width: 1100px; margin: 0 auto; }
+    .section-eyebrow {
+      font-size: 11px; font-weight: 500; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--red); margin-bottom: 10px;
+    }
+    .section-title {
+      font-size: 32px; font-weight: 500; letter-spacing: -0.04em;
+      line-height: 1.15; color: var(--black); margin-bottom: 14px;
+    }
+    .section-sub { font-size: 15px; color: var(--muted); line-height: 1.7; max-width: 680px; margin-bottom: 40px; }
+
+    /* Contents grid */
+    .contents-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+      margin-bottom: 48px;
+    }
+    .content-item {
+      background: var(--white); border: 0.5px solid var(--border);
+      border-radius: var(--radius); padding: 16px 18px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .content-num {
+      width: 32px; height: 32px; background: var(--red-lt);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 600; color: var(--red); flex-shrink: 0;
+    }
+    .content-text { font-size: 13.5px; color: var(--text); line-height: 1.4; }
+    .content-text strong { display: block; font-weight: 500; margin-bottom: 2px; }
+    .content-text span { color: var(--muted); font-size: 12px; }
+
+    /* Specs table */
+    .specs-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 48px;
+    }
+    .spec-block h4 {
+      font-size: 13px; font-weight: 600; letter-spacing: 0.05em;
+      text-transform: uppercase; color: var(--grey); margin-bottom: 14px;
+      border-bottom: 0.5px solid var(--border); padding-bottom: 8px;
+    }
+    .spec-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 8px 0; border-bottom: 0.5px solid var(--border);
+      font-size: 13.5px;
+    }
+    .spec-row:last-child { border-bottom: none; }
+    .spec-key { color: var(--muted); }
+    .spec-val { color: var(--black); font-weight: 500; }
+    .spec-val.red { color: var(--red); }
+
+    /* Info images */
+    .info-images {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+      margin-bottom: 48px;
+    }
+    .info-img {
+      border-radius: var(--radius-lg); overflow: hidden;
+      border: 0.5px solid var(--border); aspect-ratio: 4/3;
+    }
+    .info-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    /* ── BOTTOM CTA ── */
+    .bottom-cta {
+      background: var(--black); color: var(--white);
+      padding: 72px 40px; text-align: center;
+    }
+    .bottom-cta-inner { max-width: 560px; margin: 0 auto; }
+    .bottom-cta h2 {
+      font-size: 34px; font-weight: 500; letter-spacing: -0.04em;
+      line-height: 1.15; margin-bottom: 14px;
+    }
+    .bottom-cta p { font-size: 15px; color: rgba(255,255,255,0.6); margin-bottom: 32px; }
+    .bottom-qty-row {
+      display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 14px;
+    }
+    .bottom-qty-label { font-size: 13px; color: rgba(255,255,255,0.6); }
+    .bottom-qty-select {
+      background: rgba(255,255,255,0.1); border: 0.5px solid rgba(255,255,255,0.2);
+      border-radius: var(--radius); padding: 8px 14px;
+      color: var(--white); font-size: 13px; font-family: inherit; outline: none;
+    }
+    .bottom-form { display: flex; gap: 10px; }
+    .bottom-input {
+      flex: 1; background: rgba(255,255,255,0.12);
+      border: 0.5px solid rgba(255,255,255,0.25); border-radius: var(--radius);
+      padding: 14px 16px; font-size: 14px; color: var(--white); font-family: inherit; outline: none;
+    }
+    .bottom-input::placeholder { color: rgba(255,255,255,0.4); }
+    .bottom-submit {
+      background: var(--red); color: var(--white); border: none;
+      border-radius: var(--radius); padding: 14px 28px;
+      font-size: 15px; font-weight: 600; cursor: pointer; font-family: inherit; white-space: nowrap;
+    }
+    .bottom-submit:hover { background: var(--red-dk); }
+    .bottom-note { font-size: 12px; color: rgba(255,255,255,0.3); margin-top: 12px; }
+
+    /* ── FOOTER ── */
+    footer { background: var(--black); border-top: 0.5px solid #222; padding: 40px; }
+    .footer-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap;
+    }
+    .footer-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .footer-mark { width: 28px; height: 28px; background: var(--red); border-radius: 3px; display: flex; align-items: center; justify-content: center; }
+    .footer-name { font-size: 16px; font-weight: 500; letter-spacing: -0.03em; color: var(--white); }
+    .footer-name span { color: var(--red); }
+    .footer-tagline { font-size: 11px; color: #555; margin-top: 2px; }
+    .footer-right { font-size: 12px; color: #555; text-align: right; }
+    .footer-right a { color: #555; text-decoration: none; }
+    .footer-right a:hover { color: var(--white); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 880px) {
+      nav { padding: 0 20px; }
+      .product-hero { grid-template-columns: 1fr; padding: 24px 20px 40px; gap: 32px; }
+      .gallery { position: static; }
+      .product-title { font-size: 26px; }
+      .details-section { padding: 40px 20px; }
+      .contents-grid { grid-template-columns: 1fr 1fr; }
+      .specs-grid { grid-template-columns: 1fr; gap: 24px; }
+      .info-images { grid-template-columns: 1fr 1fr; }
+      .bottom-cta { padding: 48px 20px; }
+      .bottom-cta h2 { font-size: 26px; }
+      .bottom-form { flex-direction: column; }
+      footer { padding: 32px 20px; }
+      .footer-inner { flex-direction: column; align-items: flex-start; }
+      .footer-right { text-align: left; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="nav-mark">
+      <svg width="18" height="18" viewBox="0 0 22 22" fill="none">
+        <rect x="8" y="2" width="6" height="18" rx="1.5" fill="white"/>
+        <rect x="2" y="8" width="18" height="6" rx="1.5" fill="white"/>
+      </svg>
+    </div>
+    <div>
+      <div class="nav-name"><span>APT</span>ECHKA</div>
+    </div>
+  </a>
+  <div class="nav-right">
+    <a href="index.html" class="nav-back">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+      Начало
+    </a>
+    <a href="#reserve" class="nav-cta">Запази →</a>
+  </div>
+</nav>
+
+<!-- PRODUCT HERO -->
+<div style="max-width:1100px; margin:0 auto; padding:0 40px 0;">
+
+  <!-- Breadcrumb -->
+  <div style="padding:16px 0; font-size:12px; color:var(--muted);">
+    <a href="index.html" style="color:var(--muted); text-decoration:none;">Начало</a>
+    <span style="margin:0 6px; opacity:0.4;">›</span>
+    <span style="color:var(--black);">Автомобилна аптечка DIN 13164:2022</span>
+  </div>
+</div>
+
+<div class="product-hero">
+
+  <!-- Gallery -->
+  <div class="gallery">
+    <div class="gallery-main" id="main-img-wrap">
+      <img id="main-img"
+        src="https://www.walser-cdn.com/media/af/95/a3/1741328807/img_prd_shop_44293_verbandstasche__sall__aec__v1.jpg.jpg?width=1200"
+        alt="Автомобилна аптечка DIN 13164:2022">
+    </div>
+    <div class="gallery-thumbs">
+      <div class="gallery-thumb active" onclick="setImg(this, 'https://www.walser-cdn.com/media/af/95/a3/1741328807/img_prd_shop_44293_verbandstasche__sall__aec__v1.jpg.jpg?width=400')">
+        <img src="https://www.walser-cdn.com/media/af/95/a3/1741328807/img_prd_shop_44293_verbandstasche__sall__aec__v1.jpg.jpg?width=200" alt="">
+      </div>
+      <div class="gallery-thumb" onclick="setImg(this, 'https://www.walser-cdn.com/media/64/fd/ee/1754801859/img_prd_inf_02_44310_verbandstasche__sde__aec__v3.jpg.jpg?width=400')">
+        <img src="https://www.walser-cdn.com/media/64/fd/ee/1754801859/img_prd_inf_02_44310_verbandstasche__sde__aec__v3.jpg.jpg?width=200" alt="">
+      </div>
+      <div class="gallery-thumb" onclick="setImg(this, 'https://www.walser-cdn.com/media/4c/c9/67/1720005037/img_prd_inf_01_44310_verbandstasche__sde__aec__v1.jpg.jpg?width=400')">
+        <img src="https://www.walser-cdn.com/media/4c/c9/67/1720005037/img_prd_inf_01_44310_verbandstasche__sde__aec__v1.jpg.jpg?width=200" alt="">
+      </div>
+      <div class="gallery-thumb" onclick="setImg(this, 'https://www.walser-cdn.com/media/bc/e5/55/1720005028/img_prd_inf_04_44310_verbandstasche__sde__aec__v1.jpg.jpg?width=400')">
+        <img src="https://www.walser-cdn.com/media/bc/e5/55/1720005028/img_prd_inf_04_44310_verbandstasche__sde__aec__v1.jpg.jpg?width=200" alt="">
+      </div>
+      <div class="gallery-thumb" onclick="setImg(this, 'https://www.walser-cdn.com/media/9a/fc/42/1720005040/img_prd_inf_05_44310_verbandstasche__sde__aec__v1.jpg.jpg?width=400')">
+        <img src="https://www.walser-cdn.com/media/9a/fc/42/1720005040/img_prd_inf_05_44310_verbandstasche__sde__aec__v1.jpg.jpg?width=200" alt="">
+      </div>
+    </div>
+  </div>
+
+  <!-- Info -->
+  <div class="product-info">
+    <div class="product-label">Автомобилна аптечка · Директен внос</div>
+    <div class="product-title">Аптечка <span>DIN 13164:2022</span><br>от производителя</div>
+
+    <div class="product-rating">
+      <div class="stars">★★★★★</div>
+      <div class="rating-text">4.9 / 5 &nbsp;·&nbsp; 54 оценки</div>
+    </div>
+
+    <div class="product-price">
+      <div>
+        <div style="display:flex; align-items:baseline; gap:10px;">
+          <div class="price-main">~€12</div>
+          <div class="price-old">€30+</div>
+        </div>
+        <div class="price-note">Очаквана цена при директен внос · Потвърждава се при поръчка</div>
+      </div>
+    </div>
+
+    <div class="badge-row">
+      <div class="badge">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        CE маркировка
+      </div>
+      <div class="badge">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        ИАЛ съответствие
+      </div>
+      <div class="badge">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        DIN 13164:2022
+      </div>
+      <div class="badge grey">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        Мин. годност 4 год.
+      </div>
+    </div>
+
+    <!-- RESERVE FORM -->
+    <div id="form-wrap">
+      <div class="qty-section">
+        <div class="qty-label-row">
+          <div class="qty-step-label">Колко аптечки ви трябват?</div>
+        </div>
+        <div class="qty-grid">
+          <button class="qty-btn" onclick="selectQty(1,this)">
+            <span class="qn">1</span><span class="ql">бройка</span>
+          </button>
+          <button class="qty-btn active" onclick="selectQty(2,this)">
+            <span class="qn">2</span><span class="ql">коли</span>
+          </button>
+          <button class="qty-btn" onclick="selectQty(3,this)">
+            <span class="qn">3</span><span class="ql">семейство</span>
+          </button>
+          <button class="qty-btn" onclick="selectQty(4,this)">
+            <span class="qn">4+</span><span class="ql">повече</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="price-row">
+        <div class="price-row-label">Очаквана обща цена</div>
+        <div class="price-row-val">
+          <span class="old" id="p-old">€60+</span>
+          <span id="p-new">~€24</span>
+        </div>
+      </div>
+
+      <div class="email-wrap">
+        <input type="email" class="email-field" id="prod-email"
+          placeholder="твоят@имейл.com" autocomplete="email" required>
+      </div>
+      <button class="reserve-btn" onclick="handleSubmit()">
+        Запази <span id="qty-label">2 бройки</span> →
+      </button>
+      <div class="form-micro">
+        Без плащане сега. Ще получиш имейл с точна цена преди доставката.<br>
+        <a href="#">Политика за поверителност</a> · Без спам.
+      </div>
+    </div>
+
+    <div class="success-state" id="prod-success">
+      <div class="si">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C8001E" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <div class="st">Записан! 🎉</div>
+      <div class="ss">Ще те уведомим по имейл преди декемврийската доставка с точна цена. Без задължение.</div>
+    </div>
+
+    <div class="perks">
+      <div class="perk">
+        <svg class="perk-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <span><strong>Директен внос</strong> от сертифициран производител в Германия — без посредници</span>
+      </div>
+      <div class="perk">
+        <svg class="perk-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        <span><strong>Следваща доставка: Декември 2026</strong> — зимна, преди коледните пътувания</span>
+      </div>
+      <div class="perk">
+        <svg class="perk-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+        <span><strong>Без задължение</strong> — потвърждавате само при известие преди доставката</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCT DETAILS -->
+<div class="details-section">
+  <div class="details-inner">
+
+    <div class="section-eyebrow">Съдържание и спецификации</div>
+    <div class="section-title">Всичко необходимо<br>за първа помощ.</div>
+    <p class="section-sub">Аптечката съдържа всички задължителни артикули по DIN 13164:2022 — новата европейска норма. Всичко е сигурно опаковано и готово за употреба при нужда. Размери: 230×130×55 мм. Тегло: ~390 г.</p>
+
+    <div class="contents-grid">
+      <div class="content-item">
+        <div class="content-num">2</div>
+        <div class="content-text"><strong>Стерилни превръзки</strong><span>Размери 1 и 2 — за наранявания</span></div>
+      </div>
+      <div class="content-item">
+        <div class="content-num">2</div>
+        <div class="content-text"><strong>Стерилни компреси</strong><span>Голям формат за по-сериозни рани</span></div>
+      </div>
+      <div class="content-item">
+        <div class="content-num">4</div>
+        <div class="content-text"><strong>Триъгълни кърпи</strong><span>За имобилизация и превръзки</span></div>
+      </div>
+      <div class="content-item">
+        <div class="content-num">1</div>
+        <div class="content-text"><strong>Травматична превръзка</strong><span>За тежки наранявания</span></div>
+      </div>
+      <div class="content-item">
+        <div class="content-num">1</div>
+        <div class="content-text"><strong>Маска за реанимация</strong><span>CPR маска за уста</span></div>
+      </div>
+      <div class="content-item">
+        <div class="content-num">6</div>
+        <div class="content-text"><strong>Игли за кутийка</strong><span>За фиксиране на превръзки</span></div>
+      </div>
+      <div class="content-item">
+        <div class="content-num">1</div>
+        <div class="content-text"><strong>Ножица</strong><span>За рязане на дрехи и превръзки</span></div>
+      </div>
+      <div class="content-item">
+        <div class="content-num">1</div>
+        <div class="content-text"><strong>Ръкавици</strong><span>Нитрилови, за еднократна употреба</span></div>
+      </div>
+      <div class="content-item">
+        <div class="content-num">+</div>
+        <div class="content-text"><strong>Пластири и лейкопласт</strong><span>Различни размери</span></div>
+      </div>
+      <div class="content-item">
+        <div class="content-num">1</div>
+        <div class="content-text"><strong>Турникет</strong><span>За спиране на кръвотечение</span></div>
+      </div>
+      <div class="content-item">
+        <div class="content-num">1</div>
+        <div class="content-text"><strong>Термоодеяло</strong><span>За топлинна защита при шок</span></div>
+      </div>
+      <div class="content-item">
+        <div class="content-num">1</div>
+        <div class="content-text"><strong>Инструкция за първа помощ</strong><span>На няколко езика</span></div>
+      </div>
+    </div>
+
+    <!-- Info images -->
+    <div class="info-images">
+      <div class="info-img">
+        <img src="https://images.walsergroup.com/walser-shop.com/product-detail-content/verbandskasten/verbandskasten_neu_DE_1.jpg" alt="Аптечка в автомобил">
+      </div>
+      <div class="info-img">
+        <img src="https://images.walsergroup.com/walser-shop.com/product-detail-content/verbandskasten/verbandskasten_neu_DE_2.jpg" alt="Съдържание на аптечката">
+      </div>
+      <div class="info-img">
+        <img src="https://images.walsergroup.com/walser-shop.com/product-detail-content/verbandskasten/verbandskasten_neu_DE_3.jpg" alt="Употреба">
+      </div>
+      <div class="info-img">
+        <img src="https://images.walsergroup.com/walser-shop.com/product-detail-content/verbandskasten/verbandskasten_neu_DE_4.jpg" alt="Сертификация">
+      </div>
+      <div class="info-img">
+        <img src="https://images.walsergroup.com/walser-shop.com/product-detail-content/verbandskasten/verbandskasten_neu_DE_5.jpg" alt="Детайли">
+      </div>
+      <div class="info-img">
+        <img src="https://www.walser-cdn.com/media/e1/d9/47/1720005038/img_prd_inf_03_44310_verbandstasche__sde__aec__v1.jpg.jpg?width=600" alt="Употреба от жена">
+      </div>
+    </div>
+
+    <!-- Specs -->
+    <div class="specs-grid">
+      <div class="spec-block">
+        <h4>Технически данни</h4>
+        <div class="spec-row">
+          <span class="spec-key">Стандарт</span>
+          <span class="spec-val red">DIN 13164:2022</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-key">Размери</span>
+          <span class="spec-val">230 × 130 × 55 мм</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-key">Тегло</span>
+          <span class="spec-val">~390 г</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-key">Цвят</span>
+          <span class="spec-val">Червен</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-key">Минимална годност</span>
+          <span class="spec-val">4 години</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-key">Материал на чантата</span>
+          <span class="spec-val">Найлон, водоустойчив</span>
+        </div>
+      </div>
+      <div class="spec-block">
+        <h4>Сертификация и съответствие</h4>
+        <div class="spec-row">
+          <span class="spec-key">CE маркировка</span>
+          <span class="spec-val red">✓ Да</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-key">ИАЛ съответствие</span>
+          <span class="spec-val red">✓ Да</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-key">Гърция (ИΚΑ)</span>
+          <span class="spec-val red">✓ Приета</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-key">Германия, Австрия, CH</span>
+          <span class="spec-val red">✓ Задължителна</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-key">Производство</span>
+          <span class="spec-val">Германия / ЕС</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-key">Производител</span>
+          <span class="spec-val">Walser GmbH</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- BOTTOM CTA -->
+<div class="bottom-cta" id="reserve">
+  <div class="bottom-cta-inner">
+    <h2>Запази своите аптечки<br>преди декември 2026</h2>
+    <p>Без плащане сега. Само имейл за известие. Потвърждаваш при доставка.</p>
+    <div class="bottom-qty-row">
+      <span class="bottom-qty-label">Брой аптечки:</span>
+      <select class="bottom-qty-select" id="b-qty">
+        <option value="1">1 бройка</option>
+        <option value="2" selected>2 бройки</option>
+        <option value="3">3 бройки</option>
+        <option value="4">4 бройки</option>
+        <option value="5">5 бройки</option>
+        <option value="10">10 бройки</option>
+        <option value="20">20+ (търговец)</option>
+      </select>
+    </div>
+    <div class="bottom-form">
+      <input type="email" class="bottom-input" id="b-email" placeholder="твоят@имейл.com" required>
+      <button class="bottom-submit" onclick="handleBottomSubmit()">Запази →</button>
+    </div>
+    <div id="b-success" style="display:none; color:rgba(255,255,255,0.8); font-size:14px; margin-top:16px;">
+      ✓ Записан! Ще те уведомим преди декемврийската доставка.
+    </div>
+    <div class="bottom-note">Без задължение · Без спам · Само едно известие преди доставката</div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <a href="index.html" class="footer-logo">
+        <div class="footer-mark">
+          <svg width="14" height="14" viewBox="0 0 22 22" fill="none">
+            <rect x="8" y="2" width="6" height="18" rx="1.5" fill="white"/>
+            <rect x="2" y="8" width="18" height="6" rx="1.5" fill="white"/>
+          </svg>
+        </div>
+        <div>
+          <div class="footer-name"><span>APT</span>ECHKA</div>
+          <div class="footer-tagline">карай спокойно.</div>
+        </div>
+      </a>
+    </div>
+    <div class="footer-right">
+      <div>© 2026 APTECHKA · aptechka.bg</div>
+      <div style="margin-top:4px;"><a href="mailto:info@aptechka.bg">info@aptechka.bg</a></div>
+      <div style="margin-top:4px;">
+        <a href="#">Политика за поверителност</a> · <a href="#">Условия за ползване</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbwgUTuYGpW9oi2tViH3DXjMhlEgGYXlalE-LpPGtW_1gD0-j3Vu763x8G5-E8tfVdz9/exec';
+
+  function sendToSheets(email, qty, source) {
+    if (!WEBHOOK_URL || WEBHOOK_URL.startsWith('PASTE')) return;
+    fetch(WEBHOOK_URL, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, qty, source }), mode: 'no-cors'
+    }).catch(() => {});
+  }
+
+  /* Gallery */
+  function setImg(thumb, url) {
+    document.getElementById('main-img').src = url;
+    document.querySelectorAll('.gallery-thumb').forEach(t => t.classList.remove('active'));
+    thumb.classList.add('active');
+  }
+
+  /* Quantity */
+  let selectedQty = 2;
+  const prices = { 1: ['€30+','~€12'], 2: ['€60+','~€24'], 3: ['€90+','~€36'], 4: ['€120+','~€48+'] };
+  const labels = { 1: '1 бройка', 2: '2 бройки', 3: '3 бройки', 4: '4+ бройки' };
+
+  function selectQty(n, el) {
+    document.querySelectorAll('.qty-btn').forEach(b => b.classList.remove('active'));
+    el.classList.add('active');
+    selectedQty = n;
+    const p = prices[n] || prices[4];
+    document.getElementById('p-old').textContent = p[0];
+    document.getElementById('p-new').textContent = p[1];
+    document.getElementById('qty-label').textContent = labels[n] || '4+ бройки';
+  }
+
+  function handleSubmit() {
+    const email = document.getElementById('prod-email').value.trim();
+    if (!email || !email.includes('@')) {
+      document.getElementById('prod-email').style.borderColor = 'var(--red)';
+      return;
+    }
+    sendToSheets(email, selectedQty, 'product-page');
+    document.getElementById('form-wrap').style.display = 'none';
+    document.getElementById('prod-success').style.display = 'block';
+  }
+
+  function handleBottomSubmit() {
+    const email = document.getElementById('b-email').value.trim();
+    const qty   = document.getElementById('b-qty').value;
+    if (!email || !email.includes('@')) return;
+    sendToSheets(email, qty, 'product-bottom');
+    document.getElementById('b-success').style.display = 'block';
+    document.getElementById('b-email').value = '';
+  }
+
+  /* Live counter */
+  let n = 847;
+  setInterval(() => {
+    if (Math.random() > 0.7) { n++; }
+  }, 18000);
+</script>
+</body>
+</html>
