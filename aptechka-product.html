@@ -23,11 +23,12 @@
       --radius:  8px;
       --radius-lg: 14px;
     }
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; overflow-x: hidden; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
       color: var(--text);
       background: var(--white);
+      overflow-x: hidden;
       font-size: 16px;
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
@@ -322,6 +323,7 @@
     /* ── RESPONSIVE ── */
     @media (max-width: 880px) {
       nav { padding: 0 20px; }
+      .nav-back { display: none; }
       .product-hero { grid-template-columns: 1fr; padding: 24px 20px 40px; gap: 32px; }
       .gallery { position: static; }
       .product-title { font-size: 26px; }
