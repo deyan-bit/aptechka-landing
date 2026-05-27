@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="/favicon.png" type="image/png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Блог — APTECHKA</title>
+  <meta name="description" content="Съвети за пътна безопасност, изисквания за аптечки в Европа и полезни ръководства за шофьори.">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --red: #C8001E; --red-dk: #9E0018; --red-lt: #FFF0F2;
+      --black: #111111; --white: #FFFFFF; --paper: #F5F3F0;
+      --border: #E5E3E0; --muted: #666666; --radius: 8px;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; color: var(--black); background: var(--white); -webkit-font-smoothing: antialiased; }
+
+    nav { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.96); backdrop-filter: blur(8px); border-bottom: 0.5px solid var(--border); padding: 0 40px; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+    .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .nav-mark { width: 36px; height: 36px; background: var(--red); border-radius: 5px; display: flex; align-items: center; justify-content: center; }
+    .nav-name { font-size: 20px; font-weight: 500; letter-spacing: -0.04em; color: var(--black); }
+    .nav-name span { color: var(--red); }
+    .nav-right { display: flex; align-items: center; gap: 24px; }
+    .nav-link { font-size: 14px; color: var(--muted); text-decoration: none; }
+    .nav-link:hover { color: var(--black); }
+    .nav-cta { background: var(--red); color: var(--white); text-decoration: none; padding: 9px 18px; border-radius: var(--radius); font-size: 14px; font-weight: 500; }
+    .nav-cta:hover { background: var(--red-dk); }
+
+    .blog-header { max-width: 760px; margin: 0 auto; padding: 56px 24px 40px; border-bottom: 0.5px solid var(--border); }
+    .blog-header h1 { font-size: 36px; font-weight: 500; letter-spacing: -0.04em; margin-bottom: 10px; }
+    .blog-header p { font-size: 16px; color: var(--muted); }
+
+    .blog-list { max-width: 760px; margin: 0 auto; padding: 0 24px 80px; }
+
+    .blog-card { display: block; text-decoration: none; color: inherit; padding: 32px 0; border-bottom: 0.5px solid var(--border); transition: opacity .15s; }
+    .blog-card:hover .card-title { color: var(--red); }
+    .card-meta { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
+    .card-tag { font-size: 11px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; padding: 3px 10px; border-radius: 100px; }
+    .card-tag-law { background: #FCEBEB; color: #791F1F; }
+    .card-tag-guide { background: #E6F1FB; color: #0C447C; }
+    .card-date { font-size: 13px; color: var(--muted); }
+    .card-read { font-size: 13px; color: var(--muted); }
+    .card-title { font-size: 24px; font-weight: 500; letter-spacing: -0.03em; line-height: 1.2; margin-bottom: 10px; transition: color .15s; }
+    .card-excerpt { font-size: 15px; color: #444; line-height: 1.65; }
+    .card-arrow { display: inline-block; margin-top: 14px; font-size: 14px; font-weight: 500; color: var(--red); }
+
+    footer { background: var(--black); padding: 40px; }
+    .footer-inner { max-width: 760px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
+    .footer-right { font-size: 12px; color: #555; text-align: right; }
+    .footer-right a { color: #555; text-decoration: none; }
+    .footer-right a:hover { color: var(--white); }
+
+    @media(max-width:600px) {
+      nav { padding: 0 20px; }
+      .nav-link { display: none; }
+      .blog-header { padding: 40px 20px 28px; }
+      .blog-header h1 { font-size: 28px; }
+      .blog-list { padding: 0 20px 60px; }
+      .card-title { font-size: 20px; }
+      footer { padding: 32px 20px; }
+      .footer-inner { flex-direction: column; align-items: flex-start; }
+      .footer-right { text-align: left; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">
+    <div class="nav-mark">
+      <svg width="18" height="18" viewBox="0 0 22 22" fill="none">
+        <rect x="8" y="2" width="6" height="18" rx="1.5" fill="white"/>
+        <rect x="2" y="8" width="18" height="6" rx="1.5" fill="white"/>
+      </svg>
+    </div>
+    <div><div class="nav-name"><span>APT</span>ECHKA</div></div>
+  </a>
+  <div class="nav-right">
+    <a href="/blog/" class="nav-link">Блог</a>
+    <a href="/#reserve" class="nav-cta">Запази аптечка →</a>
+  </div>
+</nav>
+
+<div class="blog-header">
+  <h1>Блог</h1>
+  <p>Съвети за пътна безопасност, изисквания за аптечки в Европа и ръководства за шофьори.</p>
+</div>
+
+<div class="blog-list">
+
+  <a href="/blog/aptechka-gartsiya-2026.html" class="blog-card">
+    <div class="card-meta">
+      <span class="card-tag card-tag-law">Нов закон</span>
+      <span class="card-tag card-tag-guide">Ръководство</span>
+      <span class="card-date">24 април 2026</span>
+      <span class="card-read">· 7 мин. четене</span>
+    </div>
+    <div class="card-title">Новата аптечка за Гърция 2026: Какво се промени, каква е глобата и какво да купиш</div>
+    <div class="card-excerpt">От 18 юни 2026 г. Гърция въведе задължителен стандарт с 16 специфични артикула и глоба от 30 евро. Ако пътуваш до Гърция това лято, аптечката, която имаш в момента, почти сигурно не е достатъчна.</div>
+    <span class="card-arrow">Прочети статията →</span>
+  </a>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <a href="/" style="text-decoration:none;">
+        <svg width="140" height="40" viewBox="0 0 280 80" xmlns="http://www.w3.org/2000/svg">
+          <rect x="0" y="8" width="64" height="64" rx="6" fill="#C8001E"/>
+          <rect x="21" y="19" width="22" height="42" rx="3" fill="white"/>
+          <rect x="9" y="31" width="46" height="18" rx="3" fill="white"/>
+          <text x="84" y="52" font-family="-apple-system,sans-serif" font-size="36" font-weight="500" letter-spacing="-1.5" fill="#C8001E">APT</text>
+          <text x="150" y="52" font-family="-apple-system,sans-serif" font-size="36" font-weight="500" letter-spacing="-1.5" fill="#ffffff">ECHKA</text>
+          <text x="85" y="68" font-family="-apple-system,sans-serif" font-size="11" fill="#666666">карай спокойно.</text>
+        </svg>
+      </a>
+    </div>
+    <div class="footer-right">
+      <div>© 2026 APTECHKA · aptechka.bg</div>
+      <div style="margin-top:4px;"><a href="mailto:info@aptechka.bg">info@aptechka.bg</a></div>
+      <div style="margin-top:4px;"><a href="https://carrot.digital">website by carrot.digital</a></div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
