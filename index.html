@@ -1126,10 +1126,6 @@
     </div>
   </a>
   <div class="nav-right">
-    <div class="nav-social-proof">
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#1D9E75" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-      <span>Вече <strong id="counter-nav">847</strong> семейства запазиха бройки</span>
-    </div>
     <a href="/blog/" class="nav-blog-link">Блог</a>
     <a href="#reserve" class="nav-cta">Запази аптечка →</a>
   </div>
@@ -1330,7 +1326,6 @@
             <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
             Без риск
           </div>
-          <div class="counter-pill" id="counter-badge">847 запазени</div>
         </div>
       </div>
     </div>
@@ -1675,7 +1670,6 @@
     document.getElementById('form-body').style.display = 'none';
     document.getElementById('success-state').style.display = 'block';
     document.getElementById('trust-strip').style.display = 'none';
-    incrementCounter();
   }
 
   /* ── BOTTOM FORM SUBMIT ── */
@@ -1686,25 +1680,7 @@
     sendToSheets(email, qty, 'footer');
     document.querySelector('.bottom-form-wrap').style.display = 'none';
     document.getElementById('bottom-success').style.display = 'block';
-    incrementCounter();
   }
-
-  /* ── LIVE COUNTER (social proof) ── */
-  let baseCount = 847;
-  function incrementCounter() {
-    baseCount++;
-    document.getElementById('counter-nav').textContent = baseCount;
-    document.getElementById('counter-badge').textContent = baseCount + ' запазени';
-  }
-
-  // Simulate slow organic growth in counter for social proof
-  setInterval(() => {
-    if (Math.random() < 0.3) {
-      baseCount++;
-      document.getElementById('counter-nav').textContent = baseCount;
-      document.getElementById('counter-badge').textContent = baseCount + ' запазени';
-    }
-  }, 8000);
 
   /* ── REVIEWS CAROUSEL (mobile) ── */
   (function() {
