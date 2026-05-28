@@ -44,7 +44,8 @@
     .mobile-menu a:hover { background: #F5F3F0; }
     .mobile-menu a:last-child { border-bottom: none; }
     .mobile-menu.open { display: block; }
-    @media(max-width:600px) { .hamburger { display: block; } .nav-link { display: none !important; } .nav-blog-link { display: none !important; } }
+    .cta-mobile { display: none; }
+    @media(max-width:600px) { .hamburger { display: block; } .nav-link { display: none !important; } .nav-blog-link { display: none !important; } .cta-desktop { display: none; } .cta-mobile { display: inline; } .nav-cta { background: none !important; color: #C8001E !important; padding: 0 !important; border-radius: 0 !important; font-weight: 600 !important; font-size: 14px !important; } }
   </style>
   <script defer src="/_vercel/insights/script.js"></script>
 </head>
@@ -62,6 +63,7 @@
   </a>
   <div class="nav-right">
     <a href="/blog/" class="nav-link">Блог</a>
+    <a href="/aptechka-product.html" class="nav-cta"><span class="cta-desktop">Купи аптечка →</span><span class="cta-mobile">Запази</span></a>
     <button class="hamburger" aria-label="Меню" onclick="var m=document.getElementById('mob-nav');m.classList.toggle('open');this.setAttribute('aria-expanded',m.classList.contains('open'))">
       <svg width="22" height="16" viewBox="0 0 22 16" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect width="22" height="2" rx="1" fill="#111"/>
@@ -69,7 +71,6 @@
         <rect y="14" width="22" height="2" rx="1" fill="#111"/>
       </svg>
     </button>
-    <a href="/aptechka-product.html" class="nav-cta">Купи аптечка →</a>
   </div>
 </nav>
 
